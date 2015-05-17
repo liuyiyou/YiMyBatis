@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liuyiyou.mybatis.mapper.chapter01.UserMapper">
+
+
+
+	<insert id="insertUser" >
+		insert into user(name,age) values ('1',1)
+	</insert>
+	
+	
+	<insert id="insertUser2" useGeneratedKeys="true" keyProperty="id">
+		insert into user(name,age) values
+		<foreach item="_param" index="index" collection="array" open="("
+			separator="," close=")">
+			#{name}
+		</foreach>
+	</insert>
+
+
+
+</mapper>

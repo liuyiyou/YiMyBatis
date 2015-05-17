@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liuyiyou.mybatis.mapper.chapter06.StudentMapper">
+
+	<resultMap type="cn.liuyiyou.mybatis.domain.chapter06.Student"
+		id="baseResultMap">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="age" property="age" />
+	</resultMap>
+
+
+	<resultMap type="cn.liuyiyou.mybatis.domain.chapter06.Student"
+		id="baseResultMapAddress">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="age" property="age" />
+		<!--javaType不能少  -->
+		<association property="address" column="address"
+			javaType="cn.liuyiyou.mybatis.domain.chapter06.Address">
+			<id column="address_id" property="id" />
+			<id column="prov" property="prov" />
+			<id column="city" property="city" />
+		</association>
+
+	</resultMap>
+
+	<select id="selectAll" resultType="cn.liuyiyou.mybatis.domain.chapter06.Student">
+		select * from student;
+	</select>
+
+	<select id="selectStudentDetailById" resultMap="baseResultMapAddress">
+		select
+		s.id,s.name,s.age, a.id as address_id, a.prov, a.city
+		from student as s
+		left join address a on s.address = a.id where s.id =
+		#{id}
+	</select>
+
+</mapper>
