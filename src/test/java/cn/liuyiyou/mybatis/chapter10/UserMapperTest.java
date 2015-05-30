@@ -32,31 +32,20 @@ public class UserMapperTest {
 
 	}
 
-	@Test
-	public void selectAllTest() {
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-			UserMapper userMapper = session.getMapper(UserMapper.class);
-			List<User> users = userMapper.selectAll();
-			System.out.println(users.size());
-			
-			List<User> users2 = userMapper.selectAll();
-			System.out.println(users2.size());
-			
-			
-			session.commit();
-		} finally {
-			session.close();
-		}
-	}
 	
+	
+	/**
+	 * 关联查询后，缓存不刷新，得到的还是之前更新的值
+	 */
 	@Test
-	public void insertUserTest() {
+	public void getDetailByIdTest() {
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			UserMapper userMapper = session.getMapper(UserMapper.class);
-			int result = userMapper.updateById(49);
-			Assert.assertEquals(1, result);
+			User user = userMapper.getDetailById(7);
+			Assert.assertEquals("liuyiyou", user.getName());
+			Assert.assertEquals(1+"", user.getAddress().getId()+"");
+			System.out.println(user.getAddress().getCity());
 			session.commit();
 		} finally {
 			session.close();

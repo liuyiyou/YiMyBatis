@@ -2,11 +2,20 @@ package cn.liuyiyou.mybatis.domain.chapter10;
 
 import java.io.Serializable;
 
+import cn.liuyiyou.mybatis.domain.chapter10.Address;
+
+/**
+ * 需要序列化，否则无法进行缓存
+ * @author liuyiyou
+ *
+ */
 public class User implements Serializable {
 
 	private int id;
 	private String name;
 	private int age;
+	
+	private Address address;
 
 	public int getId() {
 		return id;
@@ -30,6 +39,16 @@ public class User implements Serializable {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override

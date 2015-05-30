@@ -64,6 +64,7 @@ public class TeacherMapperTest {
 				.getMapper(TeacherStudentMapper.class);
 		try {
 			Teacher teacher = teacherMapper.getDetail(2);
+//			System.out.println(teacher.getStudents().get(0).getAddress().getCity());
 			// System.out.println(teacher.getStudent().size());
 			sqlSession.commit();
 		} finally {
