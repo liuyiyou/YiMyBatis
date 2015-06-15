@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- 扫描注解Bean -->
+	<context:component-scan base-package="cn.liuyiyou.mybatis">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!--原本在mybait-config.xml中的数据源由 Spring接管 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<property name="driverClassName" value="${driver}" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="20" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat" />
+	</bean>
+
+
+	<!--事务管理器配置 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="search*" read-only="true" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="proc*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="background*" propagation="REQUIRED" />
+			<tx:method name="import*" propagation="REQUIRED" />
+			<tx:method name="audit*" propagation="REQUIRED" />
+			<tx:method name="cancel*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 只对业务逻辑层实施事务 -->
+	<aop:config expose-proxy="true" proxy-target-class="true">
+		<aop:pointcut id="txPointcut"
+			expression="execution(* cn.liuyiyou.mybatis..service..*+.*(..))" />
+		<aop:advisor id="txAdvisor" advice-ref="txAdvice"
+			pointcut-ref="txPointcut" />
+	</aop:config>
+
+	<!-- ======================================================================== -->
+	<!-- TransactionManager定义。 -->
+	<!-- ======================================================================== -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+
+	<!-- ======================================================================== -->
+	<!-- MyBatis SQL定义。管理MyBatis的Sqlsession -->
+	<!-- ======================================================================== -->
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 别名，如果在同一个基础包下有同名的，会报错。所以在这里需要精确一点 -->
+		<property name="typeAliasesPackage" value="cn.liuyiyou.mybatis.domain.chapter11" />
+		<!-- mybatis配置文件位置 -->
+		<property name="configLocation" value="classpath:chapter11/mybatis-config.xml" />
+		<!-- 映射文件位置 -->
+		<property name="mapperLocations" value="classpath*:mapper/chapter11/**/*.xml" />
+		<property name="typeAliases"
+			value="org.springframework.util.LinkedCaseInsensitiveMap" />
+	</bean>
+
+	<!-- ======================================================================== -->
+	<!-- 扫描Mybatis接口包定义。 -->
+	<!-- ======================================================================== -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.liuyiyou.mybatis.mapper.chapter11" />
+	</bean>
+
+</beans>

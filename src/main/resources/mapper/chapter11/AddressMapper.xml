@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liuyiyou.mybatis.mapper.chapter11.AddressMapper">
+
+	<select id="selectById" resultType="cn.liuyiyou.mybatis.domain.chapter11.Address">
+		select * from address where
+		id = #{id};
+	</select>
+</mapper>
