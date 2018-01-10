@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.liuyiyou</groupId>
-	<artifactId>YiMyBatis</artifactId>
+	<artifactId>cn.liuyiyou.mybatis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>YiMyBatis</name>
-	<url>http://maven.apache.org</url>
+	<name>cn.liuyiyou.mybatis</name>
+	<url>https://github.com/liuyiyou/cn.liuyiyou.mybatis</url>
 
 
 <properties>
