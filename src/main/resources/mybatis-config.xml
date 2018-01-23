@@ -19,7 +19,13 @@
 		</environment>
 	</environments>
 	<mappers>
+		<mapper resource="mapper/chapter01/UserMapper.xml" />
+		<mapper resource="mapper/chapter02/UserMapper.xml" />
+		<mapper resource="mapper/chapter03/UserMapper.xml" />
 		<mapper resource="mapper/chapter04/UserMapper.xml" />
+		<mapper resource="mapper/chapter05/UserMapper.xml" />
 	</mappers>
+
+
 
 </configuration>

@@ -5,125 +5,123 @@
 <mapper namespace="cn.liuyiyou.mybatis.mapper.chapter06.TeacherMapper">
 
 
-	<resultMap id="baseTeacher" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
-		<id column="id" />
-		<result column="name" />
-	</resultMap>
+    <resultMap id="baseTeacher" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
+        <id column="id"/>
+        <result column="name"/>
+    </resultMap>
 
-	<resultMap id="teacherWithStudent" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
-		<id column="id" />
-		<result column="name" />
-		<collection property="students"
-			ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
-			<id column="id" />
-			<result property="name" column="name" />
-			<result property="age" column="age" />
-		</collection>
-		<!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student" 
-			select="getStudentsByTeacherId"></collection> -->
-	</resultMap>
-
-
-	<!--teacherId:null teacherName:null id:1 age:null name:one id:6 age:null 
-		name:six -->
-	<resultMap id="teacherWithStudent3" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
-		<id column="id" />
-		<result column="name" />
-		<collection property="students"
-			ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
-			<id property="id" column="s_id" />
-			<result property="name" column="s_name" />
-			<result property="age" column="age" />
-		</collection>
-		<!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student" 
-			select="getStudentsByTeacherId"></collection> -->
-	</resultMap>
+    <resultMap id="teacherWithStudent" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
+        <id column="id"/>
+        <result column="name"/>
+        <collection property="students"
+                    ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
+            <id column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </collection>
+        <!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student"
+            select="getStudentsByTeacherId"></collection> -->
+    </resultMap>
 
 
-	<resultMap id="teacherWithStudent4" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
-		<id column="id" property="id" />
-		<result column="name" property="name" />
-		<collection property="students"
-			ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
-			<id property="id" column="s_id" />
-			<result property="name" column="s_name" />
-			<result property="age" column="age" />
-		</collection>
-		<!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student" 
-			select="getStudentsByTeacherId"></collection> -->
-	</resultMap>
+    <!--teacherId:null teacherName:null id:1 age:null name:one id:6 age:null
+        name:six -->
+    <resultMap id="teacherWithStudent3" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
+        <id column="id"/>
+        <result column="name"/>
+        <collection property="students"
+                    ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
+            <id property="id" column="s_id"/>
+            <result property="name" column="s_name"/>
+            <result property="age" column="age"/>
+        </collection>
+        <!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student"
+            select="getStudentsByTeacherId"></collection> -->
+    </resultMap>
 
 
-	<resultMap id="teacherWithStudent5" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
-		<id property="id" column="t_id" />
-		<result property="name" column="t_name" />
-		<collection property="students"
-			ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
-			<id property="id" column="s_id" />
-			<result property="name" column="s_name" />
-			<result property="age" column="s_age" />
-		</collection>
-		<!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student" 
-			select="getStudentsByTeacherId"></collection> -->
-	</resultMap>
-
-	<!-- teacher.getStudents().size() //nullpoint -->
-	<select id="selectAll1" resultMap="baseTeacher">
-		select * from teacher;
-	</select>
-
-	<!-- 因为名字相同，得不到，像下面这条语句，通过teacher.getStudents().size = 1 但是 teacher.getStudents().get(0).getName 
-		= "t1" 而不是 "one" -->
-	<select id="selectAll" resultMap="teacherWithStudent">
-		select * from teacher where id
-		= 5;
-	</select>
-
-	<!-- column 从数据库中得到的列名,或者是列名的重命名标签。这也是通常和会 传递给 resultSet.getString(columnName)方法参数中相同的字符串。 -->
-	<!-- id:null age:null name:one id:null age:null name:six -->
+    <resultMap id="teacherWithStudent4" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="students"
+                    ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
+            <id property="id" column="s_id"/>
+            <result property="name" column="s_name"/>
+            <result property="age" column="age"/>
+        </collection>
+        <!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student"
+            select="getStudentsByTeacherId"></collection> -->
+    </resultMap>
 
 
-	<select id="selectAll3" resultMap="teacherWithStudent3">
-		select t.*, s.id as s_id ,s.name as s_name  <!-- 没有加age，前台得不到age -->
-		from teacher_student as st left join teacher as t on
-		st.teacherId =
-		t.id
-		left join student as s on st.studentId = s.id
-		where t.id = 1
-	</select>
+    <resultMap id="teacherWithStudent5" type="cn.liuyiyou.mybatis.domain.chapter06.Teacher">
+        <id property="id" column="t_id"/>
+        <result property="name" column="t_name"/>
+        <collection property="students"
+                    ofType="cn.liuyiyou.mybatis.domain.chapter06.Student">
+            <id property="id" column="s_id"/>
+            <result property="name" column="s_name"/>
+            <result property="age" column="s_age"/>
+        </collection>
+        <!-- <collection property="students" ofType="cn.liuyiyou.mybatis.domain.chapter06.Student"
+            select="getStudentsByTeacherId"></collection> -->
+    </resultMap>
 
-	<select id="selectAll4" resultMap="teacherWithStudent4">
-		select t.*, s.id as s_id ,s.name as s_name  <!-- 没有加age，前台得不到age -->
-		from teacher_student as st left join teacher as t on
-		st.teacherId =
-		t.id
-		left join student as s on st.studentId = s.id
-		where t.id = 1
-	</select>
+    <!-- teacher.getStudents().size() //nullpoint -->
+    <select id="selectAll1" resultMap="baseTeacher">
+        select * from teacher;
+    </select>
 
+    <!-- 因为名字相同，得不到，像下面这条语句，通过teacher.getStudents().size = 1 但是 teacher.getStudents().get(0).getName
+        = "t1" 而不是 "one" -->
+    <select id="selectAll" resultMap="teacherWithStudent">
+        select * from teacher where id
+        = 5;
+    </select>
 
-
-	<!-- 这个都能得到 -->
-	<select id="selectAll5" resultMap="teacherWithStudent4">
-		select t.id as t_id ,t.name as
-		t_name , s.id as s_id ,s.name as s_name , s.age as s_age
-		from
-		teacher_student as st left join teacher as t on
-		st.teacherId =
-		t.id
-		left
-		join student as s on st.studentId = s.id
-		where t.id = 1
-	</select>
+    <!-- column 从数据库中得到的列名,或者是列名的重命名标签。这也是通常和会 传递给 resultSet.getString(columnName)方法参数中相同的字符串。 -->
+    <!-- id:null age:null name:one id:null age:null name:six -->
 
 
-	<select id="getStudentsByTeacherId" resultType="cn.liuyiyou.mybatis.domain.chapter06.Student">
-		select student.*
-		from teacher_student as st left join student as s on
-		st.teacherId =
-		s.id where = 1
-	</select>
+    <select id="selectAll3" resultMap="teacherWithStudent3">
+        select t.*, s.id as s_id ,s.name as s_name  <!-- 没有加age，前台得不到age -->
+        from teacher_student as st left join teacher as t on
+        st.teacherId =
+        t.id
+        left join student as s on st.studentId = s.id
+        where t.id = 1
+    </select>
 
+    <select id="selectAll4" resultMap="teacherWithStudent4">
+        select t.*, s.id as s_id ,s.name as s_name  <!-- 没有加age，前台得不到age -->
+        from teacher_student as st left join teacher as t on
+        st.teacherId =
+        t.id
+        left join student as s on st.studentId = s.id
+        where t.id = 1
+    </select>
+
+
+    <!-- 这个都能得到 -->
+    <select id="selectAll5" resultMap="teacherWithStudent4">
+        select t.id as t_id ,t.name as
+        t_name , s.id as s_id ,s.name as s_name , s.age as s_age
+        from
+        teacher_student as st left join teacher as t on
+        st.teacherId =
+        t.id
+        left
+        join student as s on st.studentId = s.id
+        where t.id = 1
+    </select>
+
+
+    <select id="getStudentsByTeacherId" resultType="cn.liuyiyou.mybatis.domain.chapter06.Student">
+        select student.*
+        from teacher_student as st left join student as s on
+        st.teacherId =
+        s.id where = 1
+    </select>
 
 
 </mapper>

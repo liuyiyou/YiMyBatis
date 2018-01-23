@@ -6,26 +6,26 @@
 
 	<!-- 没有参数的删除 -->
 	<delete id="deleteUser">
-		delete from user where id= 1
+		delete from t_mybatis_user where id= 1
 	</delete>
 
 	<!-- 根据id删除记录 -->
 	<delete id="deleteById" parameterType="int">
-		delete from user where id=
+		delete from t_mybatis_user where id=
 		#{id}
 	</delete>
 
 	<!-- 根据name删除记录 parameterType可以不写，MyBatis会自动判断。如果写了的话，对于基本类型，则要写对。比如下面的写int就会出错 
 		对于非基本类型，则没关系。 -->
 	<delete id="deleteByName" parameterType="string">
-		delete from user where
+		delete from t_mybatis_user where
 		name=
 		#{name}
 	</delete>
 
 	<!-- parameterType可以不写 对于非基本类型，则没关系。传递过来的是Map也可以。只要key对即可 -->
-	<delete id="deleteByEntity" parameterType="cn.liuyiyou.mybatis.domain.chapter02.User">
-		delete from user where
+	<delete id="deleteByEntity" parameterType="cn.liuyiyou.mybatis.domain.User">
+		delete from t_mybatis_user where
 		name=
 		#{name}
 		and age = #{age}
@@ -33,7 +33,7 @@
 
 	<!-- 和上面的一样。 -->
 	<delete id="deleteByMap" parameterType="java.util.Map">
-		delete from user where
+		delete from t_mybatis_user where
 		name=
 		#{name}
 		and age = #{age}
@@ -41,7 +41,7 @@
 
 	<!-- 批量删除,传递过来的参数是数组类型 -->
 	<delete id="deleteBatch">
-		delete from user where id in
+		delete from t_mybatis_user where id in
 		<foreach collection="array" item="ids" open="(" close=")"
 			separator=",">
 			#{ids}
@@ -50,7 +50,7 @@
 	
 	<!-- 批量删除 ,传递过来的参数是list类型 -->
 	<delete id="deleteBatch2">
-		delete from user where id in
+		delete from t_mybatis_user where id in
 		<foreach collection="list" item="id" open="(" close=")" 
 			separator=",">
 			#{id}

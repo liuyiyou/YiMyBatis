@@ -4,23 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.liuyiyou.mybatis.mapper.chapter04.UserMapper">
 
-	<select id="selectAll" resultType="cn.liuyiyou.mybatis.domain.chapter04.User">
-		select * from user;
-	</select>
+    <select id="selectAll" resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM user;
+    </select>
 
-	<select id="selectByName" parameterType="string"
-		resultType="cn.liuyiyou.mybatis.domain.chapter04.User">
-		select * from user where name = #{name};
-	</select>
+    <select id="selectByName" parameterType="string"
+            resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM user
+        WHERE name = #{name};
+    </select>
 
 
-	<select id="selectOne" resultType="cn.liuyiyou.mybatis.domain.chapter04.User">
-		select * from user limit 1;
-	</select>
+    <select id="selectOne" resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM user
+        LIMIT 1;
+    </select>
 
-	<select id="selectById" parameterType="int"
-		resultType="cn.liuyiyou.mybatis.domain.chapter04.User">
-		select * from user where id = #{id}
-	</select>
+    <select id="selectById" parameterType="int"
+            resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM user
+        WHERE id = #{id}
+    </select>
 
 </mapper>

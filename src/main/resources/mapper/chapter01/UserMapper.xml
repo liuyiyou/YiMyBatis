@@ -5,20 +5,19 @@
 <mapper namespace="cn.liuyiyou.mybatis.mapper.chapter01.UserMapper">
 
 
+    <insert id="insertUser">
+        INSERT INTO t_mybatis_user (name, age) VALUES ('1', 1)
+    </insert>
 
-	<insert id="insertUser" >
-		insert into user(name,age) values ('1',1)
-	</insert>
-	
-	
-	<insert id="insertUser2" useGeneratedKeys="true" keyProperty="id">
-		insert into user(name,age) values
-		<foreach item="_param" index="index" collection="array" open="("
-			separator="," close=")">
-			#{name}
-		</foreach>
-	</insert>
 
+
+    <insert id="insertUser2" useGeneratedKeys="true" keyProperty="id">
+        insert into t_mybatis_user(name,age) values
+        <foreach item="_param" index="index" collection="array" open="("
+                 separator="," close=")">
+            #{name}
+        </foreach>
+    </insert>
 
 
 </mapper>

@@ -1,4 +1,4 @@
-package cn.liuyiyou.mybatis.domain.chapter02;
+package cn.liuyiyou.mybatis.domain;
 
 public class User {
 

@@ -1,4 +1,4 @@
-package cn.liuyiyou.mybatis.mapper.chapter05;
+package cn.liuyiyou.mybatis.mapper.chapter03;
 
 
 import cn.liuyiyou.mybatis.domain.User;
