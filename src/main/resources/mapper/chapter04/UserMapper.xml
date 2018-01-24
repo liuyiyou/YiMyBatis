@@ -4,30 +4,78 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.liuyiyou.mybatis.mapper.chapter04.UserMapper">
 
-    <select id="selectAll" resultType="cn.liuyiyou.mybatis.domain.User">
+
+    <!--<T> T selectOne(String statement);-->
+    <select id="selectOneNoParam" resultType="cn.liuyiyou.mybatis.domain.User">
         SELECT *
-        FROM user;
+        FROM t_mybatis_user
+        LIMIT 1
     </select>
 
-    <select id="selectByName" parameterType="string"
+    <!--<T> T selectOne(String statement,Object paramter); -->
+    <select id="selectOneWithParam" resultType="cn.liuyiyou.mybatis.domain.User" parameterType="int">
+        SELECT *
+        FROM t_mybatis_user
+        WHERE id = #{id}
+    </select>
+
+
+    <!--<E> List<E> selectList(String statement) ;-->
+    <select id="selectListNoParam" resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM t_mybatis_user;
+    </select>
+
+    <!--<E> List<E> selectList(String statement,Object paramer) ;-->
+    <select id="selectListWithParam" parameterType="string"
             resultType="cn.liuyiyou.mybatis.domain.User">
         SELECT *
-        FROM user
+        FROM t_mybatis_user
         WHERE name = #{name};
     </select>
 
 
-    <select id="selectOne" resultType="cn.liuyiyou.mybatis.domain.User">
-        SELECT *
-        FROM user
-        LIMIT 1;
-    </select>
-
-    <select id="selectById" parameterType="int"
+    <!--<E> List<E> selectList(String statement, Object paramter,RowBounds rowBounds);-->
+    <select id="selectListWithParamAndRowBounds" parameterType="string"
             resultType="cn.liuyiyou.mybatis.domain.User">
         SELECT *
-        FROM user
-        WHERE id = #{id}
+        FROM t_mybatis_user
+        WHERE name = #{name};
     </select>
 
+
+    <!--<K, V> Map<K, V>  selectMap(Strng statement, String mapKey);-->
+    <select id="selectMapNoParam"
+            resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM t_mybatis_user
+    </select>
+
+    <!--<K, V> Map<K, V>  selectMap(Strng statement, String mapKey);-->
+    <select id="selectMapWithParam"
+            resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM t_mybatis_user
+        WHERE name = #{name}
+    </select>
+
+    <!--<K, V> Map<K, V> selectMap(String statement, Object parameter, String mapKey, RowBounds rowBounds)-->
+    <select id="selectMapWithParamAndBounds"
+            resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM t_mybatis_user
+        WHERE name = #{name}
+    </select>
+
+    <select id="selectById"
+            resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM t_mybatis_user
+    </select>
+
+    <!--void select(String statement, ResultHandler handler)-->
+    <select id="selectWithNoParams" resultType="cn.liuyiyou.mybatis.domain.User">
+        SELECT *
+        FROM t_mybatis_user;
+    </select>
 </mapper>

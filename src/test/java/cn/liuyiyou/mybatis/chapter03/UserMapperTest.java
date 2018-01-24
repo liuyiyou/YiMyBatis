@@ -25,7 +25,7 @@ public class UserMapperTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        DBUtils.initData("chapter-03.sql");
+        DBUtils.initHSQLData("chapter-03.sql");
         String resource = "mybatis-config.xml";
         InputStream inputStream = null;
         try {

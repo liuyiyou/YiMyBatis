@@ -1,5 +1,6 @@
 package cn.liuyiyou.mybatis.chapter05;
 
+import cn.liuyiyou.mybatis.DBUtils;
 import cn.liuyiyou.mybatis.domain.User;
 import cn.liuyiyou.mybatis.mapper.chapter05.UserMapper;
 import org.apache.ibatis.io.Resources;
@@ -8,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -18,9 +20,10 @@ public class UserMapperTest {
 
     private static SqlSessionFactory sqlSessionFactory;
 
-    @Before
-    public void setUp() throws Exception {
-        String resource = "chapter05/mybatis-config.xml";
+    @BeforeClass
+    public static void beforeClass() throws Exception {
+        DBUtils.initMySqlData("chapter-05.sql");
+        String resource = "mybatis-config.xml";
         InputStream inputStream = null;
         try {
             inputStream = Resources.getResourceAsStream(resource);
@@ -28,7 +31,6 @@ public class UserMapperTest {
             e.printStackTrace();
         }
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-
     }
 
     /**

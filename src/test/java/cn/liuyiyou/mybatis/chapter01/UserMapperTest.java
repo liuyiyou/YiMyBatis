@@ -18,7 +18,7 @@ public class UserMapperTest {
     @Before
     public void setUp() throws Exception {
 
-        DBUtils.initData("chapter-01.sql");
+        DBUtils.initHSQLData("chapter-01.sql");
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);

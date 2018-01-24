@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserMapper {
 
-    List<User> selectAll();
-
-    User selectOne();
-
-    User selectById(Integer id);
+//    List<User> selectAll();
+//
+//    User selectOne();
+//
+//    User selectById(Integer id);
 }
