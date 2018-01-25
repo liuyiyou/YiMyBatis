@@ -21,7 +21,7 @@ public class QueryTemplate {
         SqlSession session = null;
         InputStream inputStream = null;
         try {
-            String resource = "mybatis-mysql-config.xml";
+            String resource = "mybatis-config.xml";
             inputStream = Resources.getResourceAsStream(resource);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             session = sqlSessionFactory.openSession();

@@ -20,7 +20,7 @@ public class SimpleSelectTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        DBUtils.initMySqlData("chapter-04.sql");
+        DBUtils.initHSQLData("chapter-04.sql");
     }
 
     @AfterClass
