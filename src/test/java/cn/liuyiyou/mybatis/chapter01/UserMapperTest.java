@@ -1,6 +1,7 @@
 package cn.liuyiyou.mybatis.chapter01;
 
 import cn.liuyiyou.mybatis.DBUtils;
+import cn.liuyiyou.mybatis.QueryTemplate;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,17 +12,13 @@ import org.junit.Test;
 
 import java.io.InputStream;
 
+import static cn.liuyiyou.mybatis.QueryTemplate.templae;
+
 public class UserMapperTest {
 
-    private static SqlSessionFactory sqlSessionFactory;
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         DBUtils.initHSQLData("chapter-01.sql");
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-
     }
 
     /**
@@ -29,15 +26,9 @@ public class UserMapperTest {
      */
     @Test
     public void testInsertUser() {
-        SqlSession session = sqlSessionFactory.openSession();
-        try {
-            int result = session
-                    .insert("cn.liuyiyou.mybatis.mapper.chapter01.UserMapper.insertUser");
-            Assert.assertEquals(1, result);
-            session.commit();
-        } finally {
-            session.close();
-        }
+        int result= templae(sqlsession->sqlsession.insert("cn.liuyiyou.mybatis.mapper.chapter01.UserMapper.insertUser"));
+        Assert.assertEquals(1, result);
+
     }
 
 
