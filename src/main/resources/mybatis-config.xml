@@ -25,6 +25,10 @@
 		<mapper resource="mapper/chapter03/UserMapper.xml" />
 		<mapper resource="mapper/chapter04/UserMapper.xml" />
 		<mapper resource="mapper/chapter05/UserMapper.xml" />
+		<mapper resource="mapper/chapter06/StudentMapper.xml" />
+		<mapper resource="mapper/chapter06/TeacherMapper.xml" />
+		<mapper resource="mapper/chapter06/CourseMapper.xml" />
+		<mapper resource="mapper/chapter06/AddressMapper.xml" />
 	</mappers>
 
 

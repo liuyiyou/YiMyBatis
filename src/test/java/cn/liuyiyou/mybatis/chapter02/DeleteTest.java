@@ -14,7 +14,7 @@ import java.util.Map;
 import static cn.liuyiyou.mybatis.QueryTemplate.templae;
 
 
-public class UserMapperTest {
+public class DeleteTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
