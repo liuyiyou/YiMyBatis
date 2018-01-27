@@ -16,7 +16,6 @@ import static cn.liuyiyou.mybatis.QueryTemplate.templae;
 
 public class TeacherMapperTest {
 
-    private static SqlSessionFactory sqlSessionFactory;
 
     @BeforeClass
     public static void beforeClass() {

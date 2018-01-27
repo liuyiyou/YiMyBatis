@@ -3,34 +3,20 @@ package cn.liuyiyou.mybatis.chapter05;
 import cn.liuyiyou.mybatis.DBUtils;
 import cn.liuyiyou.mybatis.domain.User;
 import cn.liuyiyou.mybatis.mapper.chapter05.UserMapper;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
+
+import static cn.liuyiyou.mybatis.QueryTemplate.templae;
 
 public class UserMapperTest {
 
-    private static SqlSessionFactory sqlSessionFactory;
 
     @BeforeClass
-    public static void beforeClass() throws Exception {
-        DBUtils.initMySqlData("chapter-05.sql");
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = null;
-        try {
-            inputStream = Resources.getResourceAsStream(resource);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+    public static void beforeClass() {
+        DBUtils.initHSQLData("chapter-05.sql");
     }
 
     /**
@@ -38,61 +24,9 @@ public class UserMapperTest {
      */
     @Test
     public void selectAllTest() {
-        SqlSession session = sqlSessionFactory.openSession();
-        UserMapper userMapper = session.getMapper(UserMapper.class);
-        try {
-            List<User> users = userMapper.selectAll();
-            Assert.assertEquals(27, users.size());
-            session.commit();
-        } finally {
-            session.close();
-        }
+        List<User> users = templae(sqlSession -> sqlSession.getMapper(UserMapper.class).selectAll());
+        Assert.assertEquals(10, users.size());
     }
 
-    /**
-     * 错误测试：后台返回多个，却用了selectOne来接受，如果使用了接口，就不会产生该错误
-     */
-    @Test
-    public void selectOneTest() {
-        SqlSession session = sqlSessionFactory.openSession();
-
-        try {
-            User user = session
-                    .selectOne("cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectAll");
-            Assert.fail();
-            session.commit();
-        } finally {
-            session.close();
-        }
-    }
-
-    @Test
-    public void selectOneRightTest() {
-        SqlSession session = sqlSessionFactory.openSession();
-        UserMapper userMapper = session.getMapper(UserMapper.class);
-        try {
-            User user = userMapper.selectOne();
-            Assert.assertEquals(1, user.getId());
-
-
-            session.commit();
-        } finally {
-            session.close();
-        }
-    }
-
-
-    @Test
-    public void selectByIdTest() {
-        SqlSession session = sqlSessionFactory.openSession();
-        UserMapper userMapper = session.getMapper(UserMapper.class);
-        try {
-            User user = userMapper.selectById(10);
-            Assert.assertEquals(11, user.getAge());
-            session.commit();
-        } finally {
-            session.close();
-        }
-    }
 
 }

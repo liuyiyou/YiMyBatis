@@ -26,7 +26,6 @@ public class SimpleSelectTest {
     @AfterClass
     public static void afterClass() {
         DBUtils.deleteData();
-
     }
 
     /**

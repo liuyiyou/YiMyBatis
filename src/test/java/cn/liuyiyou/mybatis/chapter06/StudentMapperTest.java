@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import cn.liuyiyou.mybatis.DBUtils;
 import junit.framework.Assert;
 
 import org.apache.ibatis.io.Resources;
@@ -11,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import cn.liuyiyou.mybatis.domain.chapter06.Student;
@@ -20,17 +22,10 @@ public class StudentMapperTest {
 
 	private static SqlSessionFactory sqlSessionFactory;
 
-	@Before
-	public void setUp() throws Exception {
-		String resource = "chapter06/mybatis-config.xml";
-		InputStream inputStream = null;
-		try {
-			inputStream = Resources.getResourceAsStream(resource);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
+	@BeforeClass
+	public static void beforeClass() {
+		DBUtils.initHSQLData("chapter-06.sql");
 	}
 
 	@Test
