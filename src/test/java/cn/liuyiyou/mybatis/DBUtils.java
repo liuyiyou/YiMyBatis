@@ -1,11 +1,16 @@
 package cn.liuyiyou.mybatis;
 
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hsqldb.jdbcDriver;
 
+import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,6 +21,29 @@ import java.util.Properties;
  * @date: 2018/1/23
  */
 public class DBUtils {
+
+
+    protected static SqlSessionFactory sqlSessionFactory;
+
+
+    protected static void initSqlSessionFactory(String configFile, Properties props) throws Exception {
+        Reader reader = Resources.getResourceAsReader(configFile);
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
+    }
+
+    protected static void initScript(String script) throws Exception {
+        UnpooledDataSource ds = new UnpooledDataSource();
+        Connection conn = ds.getConnection();
+        Reader reader = Resources.getResourceAsReader(script);
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.setErrorLogWriter(null);
+        runner.runScript(reader);
+        conn.commit();
+        conn.close();
+        reader.close();
+    }
 
     public static void initHSQLData(String fileName) {
         Connection connection = null;

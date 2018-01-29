@@ -29,6 +29,7 @@
 		<mapper resource="mapper/chapter06/TeacherMapper.xml" />
 		<mapper resource="mapper/chapter06/CourseMapper.xml" />
 		<mapper resource="mapper/chapter06/AddressMapper.xml" />
+		<mapper resource="mapper/chapter12/UserMapper.xml" />
 	</mappers>
 
 
