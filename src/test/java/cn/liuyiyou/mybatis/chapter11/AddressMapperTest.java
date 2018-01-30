@@ -1,5 +1,7 @@
 package cn.liuyiyou.mybatis.chapter11;
 
+import cn.liuyiyou.mybatis.DBUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import cn.liuyiyou.mybatis.mapper.chapter11.AddressMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:chapter11/spring-config.xml" })
 public class AddressMapperTest extends AbstractTransactionalJUnit4SpringContextTests{
+
+
 
 
 	@Autowired
