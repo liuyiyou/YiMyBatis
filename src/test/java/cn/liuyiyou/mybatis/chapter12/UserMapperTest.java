@@ -1,4 +1,4 @@
-package cn.liuyiyou.mybatis.chapter12.chapter11;
+package cn.liuyiyou.mybatis.chapter12;
 
 import cn.liuyiyou.mybatis.DBUtils;
 import cn.liuyiyou.mybatis.mapper.chapter12.UserMapper;
