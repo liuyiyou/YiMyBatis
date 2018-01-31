@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static cn.liuyiyou.mybatis.QueryTemplate.templae;
+import static cn.liuyiyou.mybatis.QueryTemplate.template;
 
 public class UserMapperTest {
 
@@ -24,7 +24,7 @@ public class UserMapperTest {
      */
     @Test
     public void selectAllTest() {
-        List<User> users = templae(sqlSession -> sqlSession.getMapper(UserMapper.class).selectAll());
+        List<User> users = template(sqlSession -> sqlSession.getMapper(UserMapper.class).selectAll());
         Assert.assertEquals(10, users.size());
     }
 

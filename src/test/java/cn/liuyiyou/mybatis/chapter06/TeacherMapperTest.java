@@ -4,15 +4,13 @@ import cn.liuyiyou.mybatis.DBUtils;
 import cn.liuyiyou.mybatis.domain.chapter06.Student;
 import cn.liuyiyou.mybatis.domain.chapter06.Teacher;
 import cn.liuyiyou.mybatis.mapper.chapter06.TeacherMapper;
-import cn.liuyiyou.mybatis.mapper.chapter06.TeacherStudentMapper;
-import junit.framework.Assert;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
 
-import static cn.liuyiyou.mybatis.QueryTemplate.templae;
+import static cn.liuyiyou.mybatis.QueryTemplate.template;
 
 public class TeacherMapperTest {
 
@@ -25,7 +23,7 @@ public class TeacherMapperTest {
 
     @Test
     public void finAllTest() {
-        List<Teacher> teachers = templae(sqlSession -> sqlSession.getMapper(TeacherMapper.class).selectAll());
+        List<Teacher> teachers = template(sqlSession -> sqlSession.getMapper(TeacherMapper.class).selectAll());
         for (Teacher t : teachers) {
             System.out.println("teacherId:" + t.getId());
             System.out.println("teacherName:" + t.getName());
@@ -40,7 +38,7 @@ public class TeacherMapperTest {
 
 //    @Test
 //    public void getDetailTest() {
-//        Teacher teacher = templae(sqlSession -> sqlSession.getMapper(TeacherStudentMapper.class).getDetail(2));
+//        Teacher teacher = template(sqlSession -> sqlSession.getMapper(TeacherStudentMapper.class).getDetail(2));
 //        Assert.assertNotNull(teacher);
 //    }
 

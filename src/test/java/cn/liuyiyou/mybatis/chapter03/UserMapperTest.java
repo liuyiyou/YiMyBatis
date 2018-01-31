@@ -2,7 +2,6 @@ package cn.liuyiyou.mybatis.chapter03;
 
 import cn.liuyiyou.mybatis.DBUtils;
 import cn.liuyiyou.mybatis.domain.User;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cn.liuyiyou.mybatis.QueryTemplate.templae;
+import static cn.liuyiyou.mybatis.QueryTemplate.template;
 
 public class UserMapperTest {
 
@@ -27,7 +26,7 @@ public class UserMapperTest {
     @Test
     public void insertUserTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertUser";
-        int result = templae(sqlSession -> sqlSession.update(statment));
+        int result = template(sqlSession -> sqlSession.update(statment));
         Assert.assertEquals(1, result);
     }
 
@@ -40,7 +39,7 @@ public class UserMapperTest {
         User user = new User();
         user.setName("insert1");
         user.setAge(1);
-        int result = templae(sqlSession -> sqlSession.update(statment, user));
+        int result = template(sqlSession -> sqlSession.update(statment, user));
         Assert.assertEquals(1, result);
     }
 
@@ -53,7 +52,7 @@ public class UserMapperTest {
         Map<String, Object> user = new HashMap<String, Object>();
         user.put("name", "insert2");
         user.put("age", 2);
-        int result = templae(sqlSession -> sqlSession.update(statment, user));
+        int result = template(sqlSession -> sqlSession.update(statment, user));
         Assert.assertEquals(1, result);
     }
 
@@ -71,7 +70,7 @@ public class UserMapperTest {
             user.setAge(i);
             users.add(user);
         }
-        int result = templae(sqlSession -> sqlSession.update(statment, users));
+        int result = template(sqlSession -> sqlSession.update(statment, users));
         Assert.assertEquals(3, result);
     }
 
@@ -88,7 +87,7 @@ public class UserMapperTest {
             user.put("age", i);
             users.add(user);
         }
-        int result = templae(sqlSession -> sqlSession.update(statment, users));
+        int result = template(sqlSession -> sqlSession.update(statment, users));
         Assert.assertEquals(3, result);
     }
 }

@@ -10,7 +10,7 @@ public interface QueryCallBack<T> {
 
     T doQuery(SqlSession sqlSession);
 
-//    default <T> T templae(QueryCallBack<T> queryCallBack) {
+//    default <T> T template(QueryCallBack<T> queryCallBack) {
 //        SqlSession session = sqlSessionFactory.openSession();
 //        T result = null;
 //        try {

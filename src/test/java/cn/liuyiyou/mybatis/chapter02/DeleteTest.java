@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cn.liuyiyou.mybatis.QueryTemplate.templae;
+import static cn.liuyiyou.mybatis.QueryTemplate.template;
 
 
 public class DeleteTest {
@@ -26,7 +26,7 @@ public class DeleteTest {
      */
     @Test
     public void deleteUserTest() {
-        int result = templae(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteUser"));
+        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteUser"));
         Assert.assertEquals(1, result);
     }
 
@@ -35,7 +35,7 @@ public class DeleteTest {
      */
     @Test
     public void deleteUserByIdTest() {
-        int result = templae(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteById",
+        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteById",
                 2));
         Assert.assertEquals(1, result);
     }
@@ -45,7 +45,7 @@ public class DeleteTest {
      */
     @Test
     public void deleteUserByName() {
-        int result = templae(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByName",
+        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByName",
                 "test"));
         Assert.assertEquals(2, result);
     }
@@ -59,7 +59,7 @@ public class DeleteTest {
         User user = new User();
         user.setAge(100);
         user.setName("liu");
-        int result = templae(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByEntity",
+        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByEntity",
                 user));
         Assert.assertEquals(1, result);
     }
@@ -75,7 +75,7 @@ public class DeleteTest {
         // 这个虽然不报错。但是却无法查询。因为针对null
         // mysql是 xxx where age is null来进行查询的
         map.put("age", 1);
-        int result = templae(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByMap",
+        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByMap",
                 map));
         Assert.assertEquals(1, result);
     }
@@ -85,7 +85,7 @@ public class DeleteTest {
      */
     @Test
     public void deleteBatch() {
-        int result = templae(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteBatch",
+        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteBatch",
                 new Integer[]{7, 8}));
         Assert.assertEquals(2, result);
     }
@@ -96,7 +96,7 @@ public class DeleteTest {
     @Test
     public void deleteBatch2() {
         List<Integer> list = Arrays.asList(9, 10);
-        int result = templae(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteBatch2",
+        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteBatch2",
                 list));
         Assert.assertEquals(2, result);
     }

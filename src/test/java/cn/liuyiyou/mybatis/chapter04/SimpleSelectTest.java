@@ -4,7 +4,6 @@ import cn.liuyiyou.mybatis.DBUtils;
 import cn.liuyiyou.mybatis.domain.User;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.ibatis.session.RowBounds;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Map;
 
-import static cn.liuyiyou.mybatis.QueryTemplate.templae;
+import static cn.liuyiyou.mybatis.QueryTemplate.template;
 
 
 public class SimpleSelectTest {
@@ -23,32 +22,27 @@ public class SimpleSelectTest {
         DBUtils.initHSQLData("chapter-04.sql");
     }
 
-    @AfterClass
-    public static void afterClass() {
-        DBUtils.deleteData();
-    }
-
     /**
      * 错误测试：后台返回多个，却用了selectOne来接受
      */
     @Test(expected = TooManyResultsException.class)
     public void selectOneTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectListNoParam";
-        templae(sqlSession -> sqlSession.selectOne(statment));
+        template(sqlSession -> sqlSession.selectOne(statment));
     }
 
 
     @Test
     public void selectOneNoParamTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectOneNoParam";
-        User user = templae(sqlSession -> sqlSession.selectOne(statment));
+        User user = template(sqlSession -> sqlSession.selectOne(statment));
         Assert.assertNotNull(user);
     }
 
     @Test
     public void selectOneWithParamTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectOneWithParam";
-        User user = templae(sqlSession -> sqlSession.selectOne(statment, 1));
+        User user = template(sqlSession -> sqlSession.selectOne(statment, 1));
         Assert.assertNotNull(user);
     }
 
@@ -58,7 +52,7 @@ public class SimpleSelectTest {
     @Test
     public void selectAllTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectListNoParam";
-        List<User> users = templae(sqlSession -> sqlSession.selectList(statment));
+        List<User> users = template(sqlSession -> sqlSession.selectList(statment));
         Assert.assertEquals(10, users.size());
     }
 
@@ -68,7 +62,7 @@ public class SimpleSelectTest {
     @Test
     public void selectByNameTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectListWithParam";
-        List<User> users = templae(sqlSession -> sqlSession.selectList(statment, "test"));
+        List<User> users = template(sqlSession -> sqlSession.selectList(statment, "test"));
         Assert.assertEquals(2, users.size());
     }
 
@@ -79,7 +73,7 @@ public class SimpleSelectTest {
     public void selectByNameTestWithRowBounds() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectListWithParamAndRowBounds";
         RowBounds rowBounds = new RowBounds(0, 1);
-        List<User> users = templae(sqlSession -> sqlSession.selectList(statment, "test", rowBounds));
+        List<User> users = template(sqlSession -> sqlSession.selectList(statment, "test", rowBounds));
         Assert.assertEquals(1, users.size());
     }
 
@@ -90,7 +84,7 @@ public class SimpleSelectTest {
     @Test
     public void selectMapNoParamTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectMapNoParam";
-        Map<Object, List<User>> userMap = templae(sqlSession -> sqlSession.selectMap(statment, "name"));
+        Map<Object, List<User>> userMap = template(sqlSession -> sqlSession.selectMap(statment, "name"));
         Assert.assertEquals(6, userMap.size());
     }
 
@@ -100,7 +94,7 @@ public class SimpleSelectTest {
     @Test
     public void selectMapWithParamTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectMapWithParam";
-        Map<Object, List<User>> userMap = templae(sqlSession -> sqlSession.selectMap(statment, "lyy", "id"));
+        Map<Object, List<User>> userMap = template(sqlSession -> sqlSession.selectMap(statment, "lyy", "id"));
         Assert.assertEquals(2, userMap.size());
     }
 
@@ -109,21 +103,21 @@ public class SimpleSelectTest {
     public void selectMapWithParamAndBoundsTest() {
         RowBounds rowBounds = new RowBounds(0, 1);
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectMapWithParamAndBounds";
-        Map<Object, List<User>> userMap = templae(sqlSession -> sqlSession.selectMap(statment, "lyy", "id", rowBounds));
+        Map<Object, List<User>> userMap = template(sqlSession -> sqlSession.selectMap(statment, "lyy", "id", rowBounds));
         Assert.assertEquals(1, userMap.size());
     }
 
     @Test
     public void selectTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter04.UserMapper.selectWithNoParams";
-        templae(sqlSession -> {
+        template(sqlSession -> {
             sqlSession.select(statment, context -> System.out.println(context.getResultObject()));
             return null;
         });
     }
 
 
-//    private <T> T templae(QueryCallBack<T> queryCallBack) {
+//    private <T> T template(QueryCallBack<T> queryCallBack) {
 //        SqlSession session = sqlSessionFactory.openSession();
 //        T result = null;
 //        try {

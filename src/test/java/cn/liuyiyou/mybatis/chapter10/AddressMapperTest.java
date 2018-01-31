@@ -21,7 +21,7 @@ public class AddressMapperTest {
 
     @Test
     public void selectByIdTest() {
-        Address address = QueryTemplate.templae(sqlSession -> sqlSession.getMapper(AddressMapper.class).selectById(1));
+        Address address = QueryTemplate.template(sqlSession -> sqlSession.getMapper(AddressMapper.class).selectById(1));
         System.out.println(address.getCity());
     }
 
@@ -32,10 +32,10 @@ public class AddressMapperTest {
     public void updateTest() {
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-HH-dd: hh:mm:ss");
         String cityName = sd.format(new Date());
-        Address address = QueryTemplate.templae(sqlSession -> sqlSession.getMapper(AddressMapper.class).selectById(1));
+        Address address = QueryTemplate.template(sqlSession -> sqlSession.getMapper(AddressMapper.class).selectById(1));
         System.out.println("old:" + address.getCity());
         address.setCity(cityName);
-        int result = QueryTemplate.templae(sqlSession -> sqlSession.getMapper(AddressMapper.class).updateById(address));
+        int result = QueryTemplate.template(sqlSession -> sqlSession.getMapper(AddressMapper.class).updateById(address));
         Assert.assertEquals(1, result);
     }
 }

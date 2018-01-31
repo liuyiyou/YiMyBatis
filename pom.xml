@@ -15,6 +15,7 @@
         <java.version>1.5</java.version>
         <java.encoding>UTF-8</java.encoding>
         <webx-version>3.2.2</webx-version>
+        <!--http://blog.csdn.net/blueheart20/article/details/50150529-->
         <!--ASM ClassReader failed to parse class file - probably due to a new Java class file version that isn'-->
         <spring-version>4.3.2.RELEASE</spring-version>
         <springext-plugin-version>1.2</springext-plugin-version>

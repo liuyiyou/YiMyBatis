@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static cn.liuyiyou.mybatis.QueryTemplate.templae;
+import static cn.liuyiyou.mybatis.QueryTemplate.template;
 
 public class UserMapperTest {
 
@@ -25,7 +25,7 @@ public class UserMapperTest {
         Map<String, Object> params = new HashMap<>();
         params.put("name", "lyy");
         params.put("orderBy", "id");
-        templae(sqlSession -> sqlSession.getMapper(UserMapper.class).selectUserByNameOrderById(params));
+        template(sqlSession -> sqlSession.getMapper(UserMapper.class).selectUserByNameOrderById(params));
     }
 }
 
