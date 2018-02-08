@@ -13,10 +13,10 @@ import java.util.Map;
 
 import static cn.liuyiyou.mybatis.QueryTemplate.template;
 
-public class UserMapperTest {
+public class InsertTest {
 
     @BeforeClass
-    public static void beforeClass() throws Exception {
+    public static void beforeClass() {
         DBUtils.initHSQLData("chapter-03.sql");
     }
 
@@ -26,8 +26,39 @@ public class UserMapperTest {
     @Test
     public void insertUserTest() {
         String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertUser";
-        int result = template(sqlSession -> sqlSession.update(statment));
+        int result = template(sqlSession -> sqlSession.insert(statment));
         Assert.assertEquals(1, result);
+    }
+
+
+    /**
+     * 返回主键
+     */
+    @Test
+    public void insertAndRestunKey1Test() {
+        User user = new User();
+        user.setName("insert1");
+        user.setAge(1);
+        String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertReturnId";
+        int result = template(sqlSession -> sqlSession.insert(statment,user));
+        Assert.assertEquals(1, result);
+        Assert.assertTrue(user.getId() > 1);
+        System.out.println(user.getId());
+    }
+
+    /**
+     * 返回主键2
+     */
+    @Test
+    public void insertAndRestunKey2Test() {
+        User user = new User();
+        user.setName("insert1");
+        user.setAge(1);
+        String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertReturnId2";
+        int result = template(sqlSession -> sqlSession.insert(statment, user));
+        Assert.assertTrue(user.getId() > 1);
+        Assert.assertEquals(1, result);
+        System.out.println(user.getId());
     }
 
     /**
@@ -39,7 +70,7 @@ public class UserMapperTest {
         User user = new User();
         user.setName("insert1");
         user.setAge(1);
-        int result = template(sqlSession -> sqlSession.update(statment, user));
+        int result = template(sqlSession -> sqlSession.insert(statment, user));
         Assert.assertEquals(1, result);
     }
 
@@ -52,7 +83,7 @@ public class UserMapperTest {
         Map<String, Object> user = new HashMap<String, Object>();
         user.put("name", "insert2");
         user.put("age", 2);
-        int result = template(sqlSession -> sqlSession.update(statment, user));
+        int result = template(sqlSession -> sqlSession.insert(statment, user));
         Assert.assertEquals(1, result);
     }
 
@@ -70,7 +101,7 @@ public class UserMapperTest {
             user.setAge(i);
             users.add(user);
         }
-        int result = template(sqlSession -> sqlSession.update(statment, users));
+        int result = template(sqlSession -> sqlSession.insert(statment, users));
         Assert.assertEquals(3, result);
     }
 
@@ -87,7 +118,7 @@ public class UserMapperTest {
             user.put("age", i);
             users.add(user);
         }
-        int result = template(sqlSession -> sqlSession.update(statment, users));
+        int result = template(sqlSession -> sqlSession.insert(statment, users));
         Assert.assertEquals(3, result);
     }
 }

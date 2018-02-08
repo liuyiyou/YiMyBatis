@@ -16,7 +16,7 @@
     </insert>
 
     <!-- 插入返回主键1： -->
-    <insert id="insertReturnId" parameterType="cn.liuyiyou.mybatis.domain.User">
+    <insert id="insertReturnId" useGeneratedKeys="true" keyProperty="id" parameterType="cn.liuyiyou.mybatis.domain.User">
         insert into
         t_mybatis_user(name,age) values (#{name},#{age})
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -26,7 +26,7 @@
     </insert>
 
     <!-- 插入返回主键2： -->
-    <insert id="insertReturnId2" parameterType="cn.liuyiyou.mybatis.domain.User" useGeneratedKeys="true">
+    <insert id="insertReturnId2" parameterType="cn.liuyiyou.mybatis.domain.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
             t_mybatis_user (name, age) VALUES (#{name}, #{age})
     </insert>
