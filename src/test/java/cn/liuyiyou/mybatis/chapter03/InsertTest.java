@@ -31,35 +31,6 @@ public class InsertTest {
     }
 
 
-    /**
-     * 返回主键
-     */
-    @Test
-    public void insertAndRestunKey1Test() {
-        User user = new User();
-        user.setName("insert1");
-        user.setAge(1);
-        String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertReturnId";
-        int result = template(sqlSession -> sqlSession.insert(statment,user));
-        Assert.assertEquals(1, result);
-        Assert.assertTrue(user.getId() > 1);
-        System.out.println(user.getId());
-    }
-
-    /**
-     * 返回主键2
-     */
-    @Test
-    public void insertAndRestunKey2Test() {
-        User user = new User();
-        user.setName("insert1");
-        user.setAge(1);
-        String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertReturnId2";
-        int result = template(sqlSession -> sqlSession.insert(statment, user));
-        Assert.assertTrue(user.getId() > 1);
-        Assert.assertEquals(1, result);
-        System.out.println(user.getId());
-    }
 
     /**
      * 参数是实体类型：
@@ -121,4 +92,33 @@ public class InsertTest {
         int result = template(sqlSession -> sqlSession.insert(statment, users));
         Assert.assertEquals(3, result);
     }
+
+    /**
+     * 返回主键
+     */
+    @Test
+    public void insertAndRestunKey1Test() {
+        User user = new User();
+        user.setName("insert1");
+        user.setAge(1);
+        String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertReturnId";
+        int result = template(sqlSession -> sqlSession.insert(statment,user));
+        Assert.assertEquals(1, result);
+        Assert.assertTrue(user.getId() > 1);
+    }
+
+    /**
+     * 返回主键2
+     */
+    @Test
+    public void insertAndRestunKey2Test() {
+        User user = new User();
+        user.setName("insert1");
+        user.setAge(1);
+        String statment = "cn.liuyiyou.mybatis.mapper.chapter03.UserMapper.insertReturnId2";
+        int result = template(sqlSession -> sqlSession.insert(statment, user));
+        Assert.assertTrue(user.getId() > 1);
+        Assert.assertEquals(1, result);
+    }
+
 }

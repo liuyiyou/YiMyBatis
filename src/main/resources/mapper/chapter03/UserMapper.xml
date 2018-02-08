@@ -15,21 +15,7 @@
             t_mybatis_user (name, age) VALUES (#{name}, #{age})
     </insert>
 
-    <!-- 插入返回主键1： -->
-    <insert id="insertReturnId" useGeneratedKeys="true" keyProperty="id" parameterType="cn.liuyiyou.mybatis.domain.User">
-        insert into
-        t_mybatis_user(name,age) values (#{name},#{age})
-        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-            SELECT
-            LAST_INSERT_ID()
-        </selectKey>
-    </insert>
 
-    <!-- 插入返回主键2： -->
-    <insert id="insertReturnId2" parameterType="cn.liuyiyou.mybatis.domain.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO
-            t_mybatis_user (name, age) VALUES (#{name}, #{age})
-    </insert>
 
 
     <!-- 参数是Map -->
@@ -59,4 +45,19 @@
     </insert>
 
 
+    <!-- 插入返回主键1： -->
+    <insert id="insertReturnId" useGeneratedKeys="true" keyProperty="id" parameterType="cn.liuyiyou.mybatis.domain.User">
+        insert into
+        t_mybatis_user(name,age) values (#{name},#{age})
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- 插入返回主键2： -->
+    <insert id="insertReturnId2" parameterType="cn.liuyiyou.mybatis.domain.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        t_mybatis_user (name, age) VALUES (#{name}, #{age})
+    </insert>
 </mapper>

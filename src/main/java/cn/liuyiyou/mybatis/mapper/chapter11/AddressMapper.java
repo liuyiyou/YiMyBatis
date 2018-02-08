@@ -1,8 +1,10 @@
 package cn.liuyiyou.mybatis.mapper.chapter11;
 
 import cn.liuyiyou.mybatis.domain.chapter11.Address;
+import org.springframework.stereotype.Repository;
 
 
+@Repository
 public interface AddressMapper {
 
 	
