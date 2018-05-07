@@ -11,6 +11,8 @@ import org.junit.Test;
 import java.util.List;
 
 import static cn.liuyiyou.mybatis.QueryTemplate.template;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 
 public class TeacherMapperTest {
 
@@ -23,23 +25,10 @@ public class TeacherMapperTest {
 
     @Test
     public void finAllTest() {
-        List<Teacher> teachers = template(sqlSession -> sqlSession.getMapper(TeacherMapper.class).selectAll());
-        for (Teacher t : teachers) {
-            System.out.println("teacherId:" + t.getId());
-            System.out.println("teacherName:" + t.getName());
-            for (Student s : t.getStudents()) {
-                System.out.println("id:" + s.getId());
-                System.out.println("age:" + s.getAge());
-                System.out.println("name:" + s.getName());
-            }
-        }
-        Assert.assertEquals(1, teachers.size());
+        Teacher s = template(sqlSession -> sqlSession.getMapper(TeacherMapper.class).getDetailById(1));
+        assertNotNull(s);
+        System.out.println("id:" + s.getId());
+        System.out.println("name:" + s.getName());
     }
-
-//    @Test
-//    public void getDetailTest() {
-//        Teacher teacher = template(sqlSession -> sqlSession.getMapper(TeacherStudentMapper.class).getDetail(2));
-//        Assert.assertNotNull(teacher);
-//    }
-
 }
+
