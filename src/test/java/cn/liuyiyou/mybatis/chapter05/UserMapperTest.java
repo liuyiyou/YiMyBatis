@@ -25,7 +25,7 @@ public class UserMapperTest {
     @Test
     public void selectAllTest() {
         List<User> users = template(sqlSession -> sqlSession.getMapper(UserMapper.class).selectAll());
-        Assert.assertEquals(10, users.size());
+        Assert.assertEquals(5, users.size());
     }
 
 

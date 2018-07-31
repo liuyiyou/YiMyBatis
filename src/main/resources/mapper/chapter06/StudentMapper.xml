@@ -31,12 +31,6 @@
 		select * from student;
 	</select>
 
-	<select id="selectStudentDetailById" resultMap="baseResultMapAddress">
-		select
-		s.id,s.name,s.age, a.id as address_id, a.prov, a.city
-		from student as s
-		left join address a on s.address = a.id where s.id =
-		#{id}
-	</select>
+
 
 </mapper>

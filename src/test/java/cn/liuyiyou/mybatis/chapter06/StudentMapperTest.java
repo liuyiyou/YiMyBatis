@@ -22,15 +22,7 @@ public class StudentMapperTest {
     @Test
     public void finAllTest() {
         List<Student> students = template(sqlSession -> sqlSession.getMapper(StudentMapper.class).selectAll());
-        Assert.assertEquals(10, students.size());
-    }
-
-
-    @Test
-    public void finAllTest2() {
-        Student student = template(sqlSession -> sqlSession.getMapper(StudentMapper.class).selectStudentDetailById(1));//studentMapper.selectStudentDetailById(1);
-        System.out.println(student.getName());
-        System.out.println(student.getAddress().getCity());
+        Assert.assertEquals(5, students.size());
     }
 
 }

@@ -8,8 +8,4 @@ public interface StudentMapper {
 
 	List<Student> selectAll();
 
-	Student selectStudentDetailById(int id);
-	
-	
-	
 }
