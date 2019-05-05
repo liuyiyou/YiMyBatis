@@ -68,7 +68,7 @@ public class UserRedis2Test {
         user.setId(1);
         user.setName("中文");
         user.setAge(18);
-        jedis.set(IUserRedis.KEY_PREFIX+"3",JSON.toJSONString(user));
+       // jedis.set(IUserRedis.KEY_PREFIX+"3",JSON.toJSONString(user));
         System.out.println(JSON.toJSONString(user));
     }
 

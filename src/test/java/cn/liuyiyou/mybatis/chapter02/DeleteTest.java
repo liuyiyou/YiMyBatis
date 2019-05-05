@@ -26,7 +26,8 @@ public class DeleteTest {
      */
     @Test
     public void deleteUserTest() {
-        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteUser"));
+        String sql = "cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteUser";
+        int result = template(sqlSession -> sqlSession.delete(sql));
         Assert.assertEquals(1, result);
     }
 
@@ -55,12 +56,12 @@ public class DeleteTest {
      */
     @Test
     public void deleteUserByEntity() {
-
+        String sql = "cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByEntity";
         User user = new User();
         user.setAge(100);
         user.setName("liu");
-        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByEntity",
-                user));
+
+        int result = template(sqlSession -> sqlSession.delete(sql, user));
         Assert.assertEquals(1, result);
     }
 
@@ -75,8 +76,8 @@ public class DeleteTest {
         // 这个虽然不报错。但是却无法查询。因为针对null
         // mysql是 xxx where age is null来进行查询的
         map.put("age", 1);
-        int result = template(sqlSession -> sqlSession.delete("cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByMap",
-                map));
+        String sql = "cn.liuyiyou.mybatis.mapper.chapter02.UserMapper.deleteByMap" ;
+        int result = template(sqlSession -> sqlSession.delete(sql, map));
         Assert.assertEquals(1, result);
     }
 

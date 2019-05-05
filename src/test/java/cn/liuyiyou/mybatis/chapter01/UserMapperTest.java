@@ -14,15 +14,11 @@ public class UserMapperTest {
         DBUtils.initHSQLData("chapter-01.sql");
     }
 
-    /**
-     * 增加测试
-     */
     @Test
     public void testInsertUser() {
-        int result= template(sqlsession->sqlsession.insert("cn.liuyiyou.mybatis.mapper.chapter01.UserMapper.insertUser"));
+        String sql = "cn.liuyiyou.mybatis.mapper.chapter01.UserMapper.insertUser";
+        int result = template(sqlsession -> sqlsession.insert(sql));
         Assert.assertEquals(1, result);
-
     }
-
 
 }

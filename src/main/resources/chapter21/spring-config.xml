@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <jdbc:embedded-database type="H2" id="dataSource">
+        <jdbc:script location="chapter-21.sql"></jdbc:script>
+    </jdbc:embedded-database>
+
+    <!-- ======================================================================== -->
+    <!-- 创建SqlSessionFactory，同时指定数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 别名，如果在同一个基础包下有同名的，会报错。所以在这里需要精确一点 -->
+        <property name="typeAliasesPackage" value="cn.liuyiyou.mybatis.domain.chapter21"/>
+        <!-- mybatis配置文件位置 -->
+        <property name="configLocation" value="classpath:chapter21/mybatis-config.xml"/>
+        <!-- 映射文件位置 -->
+        <property name="mapperLocations" value="classpath*:mapper/chapter21/*.xml"/>
+        <property name="typeAliases"
+                  value="org.springframework.util.LinkedCaseInsensitiveMap"/>
+    </bean>
+
+    <!-- ======================================================================== -->
+    <!-- 扫描Mybatis接口包定义。 -->
+    <!-- ======================================================================== -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.liuyiyou.mybatis.mapper.chapter21"/>
+    </bean>
+
+    <!-- ======================================================================== -->
+    <!-- redis配置 -->
+    <!-- ======================================================================== -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="433"></property>
+        <property name="minIdle" value="${redis.minIdle}"></property>
+        <property name="maxIdle" value="${redis.maxIdle}"></property>
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"></property>
+        <!-- and so on -->
+    </bean>
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="${master.redis.host}"></property>
+        <property name="port" value="${master.redis.port}"></property>
+        <property name="password" value="${master.redis.pass}"></property>
+        <property name="poolConfig" ref="poolConfig"></property>
+    </bean>
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <!--GenericJackson2JsonRedisSerializer 序列化的key，可读性不高："\"User:1\""-->
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+        </property>
+        <!--Failed to deserialize payload. Is the byte array a result of corresponding serialization for Default-->
+        <!--<property name="valueSerializer">-->
+            <!--<bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>-->
+            <!--<bean class="cn.liuyiyou.mybatis.serializer.Fastjson2JsonRedisSerializer"></bean>-->
+        <!--</property>-->
+    </bean>
+
+
+    <!--事务管理器配置 -->
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
+            <tx:method name="add*"/>
+            <tx:method name="update*"/>
+            <tx:method name="save*"/>
+            <tx:method name="modify*"/>
+            <tx:method name="proc*"/>
+            <tx:method name="remove*"/>
+            <tx:method name="delete*"/>
+            <tx:method name="background*"/>
+            <tx:method name="import*"/>
+            <tx:method name="audit*"/>
+            <tx:method name="cancel*"/>
+            <tx:method name="create*"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- 只对业务逻辑层实施事务 -->
+    <aop:config expose-proxy="true" proxy-target-class="true">
+        <aop:pointcut id="txPointcut"
+                      expression="execution(* cn.liuyiyou.mybatis..mapper..*+.*(..))"/>
+        <aop:advisor id="txAdvisor" advice-ref="txAdvice"
+                     pointcut-ref="txPointcut"/>
+    </aop:config>
+
+    <!-- ======================================================================== -->
+    <!-- TransactionManager定义。 -->
+    <!-- ======================================================================== -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="transactionTemplate"
+          class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+
+
+</beans>

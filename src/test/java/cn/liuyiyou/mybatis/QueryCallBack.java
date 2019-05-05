@@ -6,19 +6,8 @@ import org.apache.ibatis.session.SqlSession;
  * @author: liuyiyou
  * @date: 2018/1/24
  */
+@FunctionalInterface
 public interface QueryCallBack<T> {
 
     T doQuery(SqlSession sqlSession);
-
-//    default <T> T template(QueryCallBack<T> queryCallBack) {
-//        SqlSession session = sqlSessionFactory.openSession();
-//        T result = null;
-//        try {
-//            result = queryCallBack.doQuery(session);
-//            session.commit();
-//        } finally {
-//            session.close();
-//        }
-//        return result;
-//    }
 }

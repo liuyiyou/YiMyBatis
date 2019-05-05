@@ -58,11 +58,7 @@ public class DBUtils {
             connection = DriverManager.getConnection(url, username, pwd);
             ScriptRunner runner = new ScriptRunner(connection);
             runner.runScript(new BufferedReader(Resources.getResourceAsReader(fileName)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -89,11 +85,7 @@ public class DBUtils {
             connection = DriverManager.getConnection(url, username, pwd);
             ScriptRunner runner = new ScriptRunner(connection);
             runner.runScript(new BufferedReader(Resources.getResourceAsReader(fileName)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             try {

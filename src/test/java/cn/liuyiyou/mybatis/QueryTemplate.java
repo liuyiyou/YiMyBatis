@@ -17,15 +17,14 @@ public class QueryTemplate {
     private static SqlSessionFactory sqlSessionFactory;
 
     public static <T> T template(QueryCallBack<T> queryCallBack) {
-        T result = null;
         SqlSession session = null;
         InputStream inputStream = null;
+        T result = null;
         try {
             String resource = "mybatis-config.xml";
             inputStream = Resources.getResourceAsStream(resource);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             session = sqlSessionFactory.openSession();
-            //具体调用靠其子类实现
             result = queryCallBack.doQuery(session);
             session.commit();
             return result;

@@ -98,7 +98,7 @@
         <!-- 别名，如果在同一个基础包下有同名的，会报错。所以在这里需要精确一点 -->
         <property name="typeAliasesPackage" value="cn.liuyiyou.mybatis.domain.chapter11"/>
         <!-- mybatis配置文件位置 -->
-        <property name="configLocation" value="classpath:chapter11/mybatis-config.xml"/>
+        <property name="configLocation" value="classpath:chapter20/mybatis-config.xml"/>
         <!-- 映射文件位置 -->
         <property name="mapperLocations" value="classpath*:mapper/chapter11/**/*.xml"/>
         <property name="typeAliases"
